@@ -63,9 +63,18 @@
     <Content Include="css\default.css" />
     <Content Include="index.html" />
     <Content Include="js\app.js" />
-    <Content Include="js\httpClient.js" />
-    <Content Include="js\httpConnection.js" />
+    <Content Include="js\application\VendAndPayRequest.js" />
+    <Content Include="js\httpClient\httpClient.js" />
+    <Content Include="js\httpClient\httpClientPromise.js" />
+    <Content Include="js\httpConnection\httpConnection.js" />
+    <Content Include="js\httpConnection\httpConnectionFactory.js" />
+    <Content Include="js\httpConnection\httpConnectionPromise.js" />
+    <Content Include="js\logging\consoleLogger.js" />
+    <Content Include="js\logging\loggerFactory.js" />
+    <Content Include="js\PayAndVendPromise.js" />
+    <Content Include="js\VendingMachineClient.js" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
