@@ -14,6 +14,30 @@
             }
             
             HttpConnection.prototype.send = function () {
+                var self = this;
+
+                var handleStateChange = function (event) {
+                    self.xhrObject.onerror = null;
+                    if (self.xhrObject.readyState == 4) {
+                        if (self.xhrObject.status == 200) {
+                            var responseHeaders = getResponseHeaders();
+                            self.doneCallback(self.url, self.xhrObject.responseText, responseHeaders);
+                        }
+                        else if (self.xhrObject.status) {
+                            self.failCallback(self.url, self.xhrObject.responseText, self.xhrObject.status);
+                        }
+                    }
+                };
+
+                var getResponseHeaders = function () {
+                    return self.xhrObject.getAllResponseHeaders();
+                };
+
+                var handleError = function (event) {
+                    self.xhrObject.onreadystatechange = null;
+                    self.failCallback(this.url, event.message, this.xhrObject.status);
+                };
+
                 this.xhrObject.onreadystatechange = function (event) { return handleStateChange(event); };
                 this.xhrObject.onerror = function (event) { return handleError(event); };
                 this.xhrObject.open(this.httpMethod.getMethod(), this.url, this.async);
@@ -32,27 +56,7 @@
                 this.xhrObject.abort();
             };
 
-            var handleStateChange = function (event) {
-                this.xhrObject.onerror = null;
-                if (this.xhrObject.readyState == 4) {
-                    if (this.xhrObject.status == 200) {
-                        var responseHeaders = getResponseHeaders();
-                        this.doneCallback(this.url, this.xhrObject.responseText, responseHeaders);
-                    }
-                    else if (this.xhrObject.status) {
-                        this.failCallback(this.url, this.xhrObject.responseText, this.xhrObject.status);
-                    }
-                }
-            };
-
-            var getResponseHeaders = function () {
-                return this.xhrObject.getAllResponseHeaders();
-            };
-
-            var handleError = function (event) {
-                this.xhrObject.onreadystatechange = null;
-                this.failCallback(this.url, event.message, this.xhrObject.status);
-            };
+            
             return HttpConnection;
         })();
 

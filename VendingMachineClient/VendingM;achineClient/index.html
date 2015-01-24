@@ -5,21 +5,43 @@
     <title>Vending Machine Client</title>
 
     <link href="/css/default.css" rel="stylesheet" />
-    <script src="/js/app.js"></script>
+
+    <script src="/js/logging/consoleLogger.js"></script>
+    <script src="/js/logging/loggerFactory.js"></script>
+    
+    <script src="/js/error/errorCodes.js"></script>
+    <script src="/js/error/errorHandler.js"></script>
+    <script src="/js/error/errorManager.js"></script>
+    <script src="/js/error/errorResponse.js"></script>
+
+    <script src="/js/application/vendAndPayRequest.js"></script>
+    
+    <script src="/js/httpClient/httpClient.js"></script>
+    <script src="/js/httpClient/httpClientPromise.js"></script>
+    
+    <script src="/js/httpConnection/httpConnection.js"></script>
+    <script src="/js/httpConnection/httpConnectionFactory.js"></script>
+    <script src="/js/httpConnection/httpConnectionPromise.js"></script>
+    <script src="/js/httpConnection/RequestHeaders.js"></script>
+    <script src="/js/httpConnection/httpMethod.js"></script>
+    
+    <script src="/js/payAndVendPromise.js"></script>
+    <script src="/js/vendingMachineClient.js"></script>
+    <script src="/js/vendingMachineUI.js"></script>
+    <script src="/js/vendingMachineLogic.js"></script>
+    <script src="/js/dialogManager.js"></script>
 </head>
 <body>
     <div class="selections">
         <div class="buttons">
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
+            <button id="selection1" data-product-id="1">1</button>
+            <button id="selection2" data-product-id="2">2</button>
+            <button id="selection3" data-product-id="3">3</button>
+            <button id="selection4" data-product-id="4">4</button>
+            <button id="selection5" data-product-id="5">5</button>
         </div>
     </div>
-    <div id="info" class="info">
-        <span>Status:</span>
-        <span id="infoText" class="info-text"></span>
-    </div>
+    <div id="status" class="status info"></div>
 </body>
 </html>
+<script src="/js/app.js"></script>

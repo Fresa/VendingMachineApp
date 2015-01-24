@@ -2,7 +2,7 @@
 
 (function (vendingMachine) {
     (function (httpClient) {
-        var logger = vendingMachine.logging.LoggerFactory.Create("HttpClient");
+        var logger = vendingMachine.logging.LoggerFactory.create("HttpClient");
 
         var HttpClient = (function () {
 
@@ -11,19 +11,25 @@
                 this.baseUrl = baseUrl;
             }
 
-            HttpClient.prototype.post = function (request) {
+            HttpClient.prototype.post = function (endpoint, request) {
                 var headers = this.connectionFactory.createRequestHeaders();
                 headers.setContentTypeJSON();
 
                 var clientPromise = new vendingMachine.httpClient.HttpClientPromise();
 
+                var url = this.baseUrl + endpoint;
                 var bodyString = JSON.stringify(request);
-                var connection = this.connectionFactory.createHttpConnection(url, bodyString, headers, new httpConnection.HttpMethod("POST"));
+                var connection = this.connectionFactory.createHttpConnection(url, bodyString, headers, new vendingMachine.httpConnection.HttpMethod("POST"));
 
                 var timeoutId = window.setTimeout(function () {
                     connection.abort();
-                    var timeoutErrorResponse = "timedout";
-                    httpFailCallback(url, timeoutErrorResponse, 0);
+
+                    var timeoutErrorResponse = new vendingMachine.error.ErrorResponse(
+                      vendingMachine.error.ErrorCodes.TIME_OUT,
+                      "Message timed out in client"
+                    );
+
+                    httpFailCallback(url, timeoutErrorResponse, 0, clientPromise, timeoutId);
                 }, 5000);
 
                 var connectionPromise = connection.send();
@@ -41,8 +47,8 @@
 
             var httpFailCallback = function (url, error, status, clientPromise, timeoutId) {
                 window.clearTimeout(timeoutId);
-                logger.error("Failed to request: " + url + "\n" + error + "\n" + status);
-                clientPromise(url, error, status);
+                logger.error("Failed to request: " + url + "\nError: " + error + "\nStatus: " + status);
+                clientPromise.fail(url, error, status);
             };
 
             return HttpClient;

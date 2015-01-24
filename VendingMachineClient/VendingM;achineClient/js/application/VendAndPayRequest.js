@@ -2,14 +2,14 @@
 
 (function (vendingMachine) {
     (function (application) {
-        var logger = vendingMachine.logging.LoggerFactory.Create("VendingMachineRequest");
+        var logger = vendingMachine.logging.LoggerFactory.create("VendingMachineRequest");
 
         var VendingMachineRequest = (function () {
             function VendingMachineRequest(productId, buttonId) {
                 this.productId = productId;
                 this.buttonId = buttonId;
 
-                logger.info("Request: " + JSON.stringify(this));
+                logger.info("Product id: " + productId + ", button id: " + buttonId);
             }
 
             return VendingMachineRequest;

@@ -1,24 +1,27 @@
-﻿var httpConnection = httpConnection || {};
-(function (httpConnection) {
-    var HttpConnectionFactory = (function () {
-        function HttpConnectionFactory() {
-        }
+﻿var vendingMachine = vendingMachine || {};
 
-        HttpConnectionFactory.prototype.createRequestHeaders = function () {
-            return new httpConnection.RequestHeaders();
-        };
+(function (vendingMachine) {
+    (function (httpConnection) {
+        var HttpConnectionFactory = (function () {
+            function HttpConnectionFactory() {
+            }
 
-        HttpConnectionFactory.prototype.createResponseHeaders = function () {
-            return new httpConnection.ResponseHeaders();
-        };
+            HttpConnectionFactory.prototype.createRequestHeaders = function () {
+                return new vendingMachine.httpConnection.RequestHeaders();
+            };
 
-        HttpConnectionFactory.prototype.createHttpConnection = function (url, data, requestHeaders, httpMethod) {
-            var xhrObject = new XMLHttpRequest();
-            return new httpConnection.HttpConnection(xhrObject, url, data, requestHeaders, httpMethod, true);
-        };
+            HttpConnectionFactory.prototype.createResponseHeaders = function () {
+                return new vendingMachine.httpConnection.ResponseHeaders();
+            };
 
-        return HttpConnectionFactory;
-    })();
+            HttpConnectionFactory.prototype.createHttpConnection = function (url, data, requestHeaders, httpMethod) {
+                var xhrObject = new XMLHttpRequest();
+                return new vendingMachine.httpConnection.HttpConnection(xhrObject, url, data, requestHeaders, httpMethod, true);
+            };
 
-    httpConnection.HttpConnectionFactory = HttpConnectionFactory;
-})(httpConnection);
+            return HttpConnectionFactory;
+        })();
+
+        httpConnection.HttpConnectionFactory = HttpConnectionFactory;
+    })(vendingMachine.httpConnection || (vendingMachine.httpConnection = {}));
+})(vendingMachine);

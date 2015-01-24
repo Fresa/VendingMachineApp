@@ -38,15 +38,19 @@
             padding: 0.5em;
         }
 
-.info {
+.status {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: aqua;
     text-align: left;
     padding: 5px 10px 5px 10px;
+    min-height: 1em;
 }
 
-    .info .info-text {
-        margin-left: 5px;
+    .status.info {
+        background-color: green;
+    }
+
+    .status.error {
+        background-color: red;
     }

@@ -3,20 +3,21 @@
 (function (vendingMachine) {
     (function (logging) {
         var ConsoleLogger = (function () {
+
             function ConsoleLogger(name) {
                 this.name = name;
             };
 
             ConsoleLogger.prototype.info = function (message) {
-                log("INFO", message);
+                log("INFO", this.name, message);
             };
 
             ConsoleLogger.prototype.error = function (message) {
-                log("ERROR", message);
+                log("ERROR", this.name, message);
             };
 
-            var log = function (type, message) {
-                console.log("[" + type + "] | " + this.name + " -> " + message);
+            var log = function (type, name, message) {
+                console.log("[" + type + "] | " + name + " -> " + message);
             };
 
             return ConsoleLogger;
